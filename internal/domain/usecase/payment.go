@@ -39,9 +39,17 @@ func sendSQS(payment entities.PaymentRequest, requestId string) error {
 		return err
 	}
 
+	messageAttributes := map[string]*sqs.MessageAttributeValue{
+		"Source": {
+			DataType:    aws.String("String"),
+			StringValue: aws.String("payments-processor"),
+		},
+	}
+
 	_, err = sqsClient.SendMessage(&sqs.SendMessageInput{
-		MessageBody: aws.String(string(paymentJSON)),
-		QueueUrl:    &queueURL,
+		MessageBody:       aws.String(string(paymentJSON)),
+		QueueUrl:          &queueURL,
+		MessageAttributes: messageAttributes,
 	})
 
 	if err != nil {
