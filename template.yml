@@ -1,30 +1,38 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
+
 Resources:
-  paymentProcessor:
+  PaymentProcessor:
     Type: 'AWS::Serverless::Function'
     Properties:
       CodeUri: cmd/api/main.go
       Handler: main
       Runtime: go1.x
-      Events:
-        MyApi:
-          Type: Api
-          Properties:
-            Path: /payment-processor
-            Method: PATCH
 
-  paymentsSQS:
-    Type: 'AWS::SQS::Queue'
-
-  paymentsProcessor:
-    Type: 'AWS::Serverless::Function'
+  PaymentApi:
+    Type: 'AWS::Serverless::Api'
     Properties:
-      CodeUri: cmd/api/main.go
-      Handler: main
-      Runtime: go1.x
-      Events:
-        MySqsEvent:
-          Type: SQS
-          Properties:
-            Queue: !GetAtt paymentsSQS.Arn
+      StageName: prod
+      DefinitionBody:
+        swagger: '2.0'
+        info:
+          title: Payment Processor API
+        paths:
+          /payment-processor:
+            x-amazon-apigateway-any-method:
+              x-amazon-apigateway-integration:
+                type: aws_proxy
+                httpMethod: PATCH
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${PaymentProcessor.Arn}/invocations
+              responses: {}
+              parameters: []
+              consumes: []
+              produces: []
+        x-amazon-apigateway-binary-media-types:
+          - '*/*'
+
+Outputs:
+  ApiEndpoint:
+    Description: API Gateway endpoint URL
+    Value: !Sub "https://${PaymentApi}.execute-api.${AWS::Region}.amazonaws.com/prod/payment-processor"
