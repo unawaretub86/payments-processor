@@ -27,7 +27,6 @@ Siga estos pasos para desplegar la función Lambda y la API Gateway utilizando e
 
 git clone https://github.com/unawaretub86/payments-processor
 
-
 2. Asegúrese de tener la AWS CLI configurada correctamente con las credenciales adecuadas: 
 
 - aws configure
@@ -45,7 +44,7 @@ Ejemplo de solicitud HTTP:
 POST https://<API_GATEWAY_ENDPOINT>/payments-processor
 
 {
-    "user_id": "1234prueba",
+        "user_id": "1234prueba",
 	"item": "prueba",
 	"quantity": 1111,
 	"total_price": 2222
