@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Resources:
+  MyGoLambdaFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      CodeUri: cmd/api/
+      Handler: main
+      Runtime: go1.x
+      Events:
+        MyApi:
+          Type: Api
+          Properties:
+            Path: /payment-processor
+            Method: PATCH
+
+  paymentsSQS:
+    Type: 'AWS::SQS::Queue'
+
+  paymentsProcessorEvents:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      CodeUri: cmd/api/
+      Handler: main
+      Runtime: go1.x
+      Events:
+        MySqsEvent:
+          Type: SQS
+          Properties:
+            Queue: !GetAtt paymentsSQS.Arn
