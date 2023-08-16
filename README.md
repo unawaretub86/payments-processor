@@ -44,8 +44,5 @@ Ejemplo de solicitud HTTP:
 POST https://<API_GATEWAY_ENDPOINT>/payments-processor
 
 {
-        "user_id": "1234prueba",
-	"item": "prueba",
-	"quantity": 1111,
-	"total_price": 2222
+    "order_id":"4178ee82-514c-4d09-a581-70403cbda714"
 }
