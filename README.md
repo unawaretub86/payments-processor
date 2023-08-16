@@ -1,6 +1,6 @@
 # Lambda en Golang para Procesar Eventos de API Gateway
 
-![GitHub](https://github.com/unawaretub86/orders-processor)
+![GitHub](https://github.com/unawaretub86/payments-processor)
 ![GitHub contributors](https://github.com/unawaretub86)
 
 Esta es una función Lambda escrita en Golang que se encarga de procesar eventos proporcionados desde una API Gateway. Puede utilizarse para manejar solicitudes HTTP y ejecutar lógica personalizada en función de las solicitudes entrantes.
@@ -25,7 +25,7 @@ Siga estos pasos para desplegar la función Lambda y la API Gateway utilizando e
 
 1. Clona este repositorio:
 
-git clone https://github.com/unawaretub86/orders-processor
+git clone https://github.com/unawaretub86/payments-processor
 
 
 2. Asegúrese de tener la AWS CLI configurada correctamente con las credenciales adecuadas: 
@@ -42,7 +42,7 @@ git clone https://github.com/unawaretub86/orders-processor
 
 Ejemplo de solicitud HTTP:
 
-POST https://<API_GATEWAY_ENDPOINT>/mi/ruta
+POST https://<API_GATEWAY_ENDPOINT>/payments-processor
 
 {
     "user_id": "1234prueba",
